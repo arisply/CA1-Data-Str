@@ -8,7 +8,7 @@ public class Campsite {
     private CustomList<Guest> guests=new CustomList<>();
 
     public void addGuest(Guest guest){
-        guest.addElement(guest);
+        guests.addElement(guest);
     }
 
     public CustomList<Guest> getGuests() {

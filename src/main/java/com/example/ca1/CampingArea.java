@@ -14,9 +14,9 @@ public class CampingArea {
         return plots;
     }
 
-    public CampingArea(String description, String name) {
-        this.description = description;
+    public CampingArea(String name, String description) {
         this.name=name;
+        this.description = description;
     }
 
     public String getName() {

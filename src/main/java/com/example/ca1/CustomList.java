@@ -19,4 +19,16 @@ public class CustomList<T> {
             temp=temp.next;
         }
     }
+
+    public int size() {
+        int count = 0;
+        Node<T> temp = head;
+
+        while (temp != null) {
+            count++;
+            temp = temp.next;
+        }
+
+        return count;
+    }
 }
