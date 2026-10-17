@@ -1,4 +1,5 @@
 package com.example.ca1;
+import java.time.LocalDate;
 
 public class Plot {
     private int plotNum;
@@ -10,6 +11,7 @@ public class Plot {
     private int beds;
     private String facilities;
     private String photoURL;
+    private CustomList<Booking> bookings=new CustomList<>();
 
 
     public Plot(int plotNum,String type,boolean electricity,double costPerNight, double size,int bedrooms, int beds,String facilities,String photoURL) {
@@ -24,6 +26,56 @@ public class Plot {
         this.photoURL=photoURL;
 
     }
+    // Get all bookings
+    public CustomList<Booking> getBookings() {
+        return bookings;
+    }
+
+    // Add booking if available
+    public boolean addBooking(Booking booking) {
+        if(booking==null) {
+            return false;
+        }
+
+        if(isAvailable(booking.getStartDate(),booking.getEndDate())) {
+            bookings.addElement(booking);
+            booking.setStatus("Confirmed");
+            return true;
+        }
+        return false;
+    }
+
+    // Check if plot available for selected dates
+    public boolean isAvailable(LocalDate startDate,LocalDate endDate) {
+        Booking newBooking=new Booking(0,startDate,endDate,null,this);
+
+        if(!newBooking.hasValidDates()) {
+            return false;
+        }
+
+        for(int i=0;i<bookings.size();i++) {
+            Booking existing=bookings.get(i);
+
+            if(existing.overlaps(newBooking)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Cancel booking by ID
+    public boolean cancelBooking(int bookingId) {
+        for(int i=0;i<bookings.size();i++) {
+            Booking booking=bookings.get(i);
+
+            if(booking.getBookingId()==bookingId) {
+                bookings.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public String getPhotoURL() {
         return photoURL;
@@ -81,7 +133,6 @@ public class Plot {
         this.electricity = electricity;
     }
 
-
     public int getPlotNum() {
         return plotNum;
     }
@@ -97,6 +148,9 @@ public class Plot {
     public void setType(String type) {
         this.type = type;
     }
+
+
+
 
     @Override
     public String toString(){

@@ -7,6 +7,7 @@ public class Booking {
     private LocalDate endDate;
     private Guest guest;
     private Plot plot;
+    private String status="Pending";
 
     public Booking(int bookingId,LocalDate startDate,LocalDate endDate,Guest guest,Plot plot) {
         this.bookingId=bookingId;
@@ -14,6 +15,14 @@ public class Booking {
         this.endDate=endDate;
         this.guest=guest;
         this.plot=plot;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status=status;
     }
 
     public Plot getPlot() {
@@ -60,6 +69,12 @@ public class Booking {
         return startDate!=null
                 &&endDate!=null
                 &&endDate.isAfter(startDate);
+    }
+
+//Check if two bookings have overlapping dates
+    public boolean overlaps(Booking other) {
+        return startDate.isBefore(other.getEndDate())
+                && endDate.isAfter(other.getStartDate());
     }
 
     @Override
