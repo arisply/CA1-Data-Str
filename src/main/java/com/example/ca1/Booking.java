@@ -1,13 +1,14 @@
 package com.example.ca1;
+import java.time.LocalDate;
 
 public class Booking {
     private int bookingId;
-    private String startDate;
-    private String endDate;
+    private  LocalDate startDate;
+    private LocalDate endDate;
     private Guest guest;
     private Plot plot;
 
-    public Booking(int bookingId,String startDate,String endDate,Guest guest,Plot plot) {
+    public Booking(int bookingId,LocalDate startDate,LocalDate endDate,Guest guest,Plot plot) {
         this.bookingId=bookingId;
         this.startDate=startDate;
         this.endDate=endDate;
@@ -39,20 +40,26 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean hasValidDates(){
+        return startDate!=null
+                &&endDate!=null
+                &&endDate.isAfter(startDate);
     }
 
     @Override
